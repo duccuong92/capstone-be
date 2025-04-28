@@ -1,15 +1,77 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
-  output   = "../generated/prisma"
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mysql"
   url      = env("DATABASE_URL")
+}
+
+model Comments {
+  id          Int       @id @default(autoincrement())
+  userId      Int
+  imageId     Int
+  commentDate DateTime? @db.Date
+  content     String?   @db.Text
+  deletedBy   Int       @default(0)
+  isDeleted   Boolean   @default(false)
+  deletedAt   DateTime? @db.Timestamp(0)
+  createdAt   DateTime  @default(now()) @db.Timestamp(0)
+  updatedAt   DateTime  @default(now()) @db.Timestamp(0)
+  Users       Users     @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "Comments_ibfk_1")
+  Images      Images    @relation(fields: [imageId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "Comments_ibfk_2")
+
+  @@index([imageId], map: "imageId")
+  @@index([userId], map: "userId")
+}
+
+model Images {
+  id           Int            @id @default(autoincrement())
+  imageName    String         @db.VarChar(255)
+  url          String         @db.VarChar(255)
+  description  String?        @db.Text
+  userId       Int?
+  deletedBy    Int            @default(0)
+  isDeleted    Boolean        @default(false)
+  deletedAt    DateTime?      @db.Timestamp(0)
+  createdAt    DateTime       @default(now()) @db.Timestamp(0)
+  updatedAt    DateTime       @default(now()) @db.Timestamp(0)
+  Comments     Comments[]
+  Users        Users?         @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "Images_ibfk_1")
+  Saved_Images Saved_Images[]
+
+  @@index([userId], map: "userId")
+}
+
+model Saved_Images {
+  userId    Int
+  imageId   Int
+  saveDate  DateTime? @db.Date
+  deletedBy Int       @default(0)
+  isDeleted Boolean   @default(false)
+  deletedAt DateTime? @db.Timestamp(0)
+  createdAt DateTime  @default(now()) @db.Timestamp(0)
+  updatedAt DateTime  @default(now()) @db.Timestamp(0)
+  Users     Users     @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "Saved_Images_ibfk_1")
+  Images    Images    @relation(fields: [imageId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "Saved_Images_ibfk_2")
+
+  @@id([userId, imageId])
+  @@index([imageId], map: "imageId")
+}
+
+model Users {
+  id           Int            @id @default(autoincrement())
+  fullName     String         @db.VarChar(255)
+  email        String         @unique(map: "email") @db.VarChar(255)
+  password     String         @db.VarChar(255)
+  age          Int?
+  avatar       String?        @db.VarChar(255)
+  deletedBy    Int            @default(0)
+  isDeleted    Boolean        @default(false)
+  deletedAt    DateTime?      @db.Timestamp(0)
+  createdAt    DateTime       @default(now()) @db.Timestamp(0)
+  updatedAt    DateTime       @default(now()) @db.Timestamp(0)
+  Comments     Comments[]
+  Images       Images[]
+  Saved_Images Saved_Images[]
 }

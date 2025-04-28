@@ -1,6 +1,6 @@
 import { ForbiddenException, UnAuthorizedException } from "./exception.helper";
-import { responseError } from "./reponse.helper";
 import jwt from "jsonwebtoken";
+import { responseError } from "./response.helper";
 
 export const handleError = (err, req, res, next) => {
      //   (new Error())
