@@ -39,18 +39,7 @@ const authController = {
     }
   },
 
-  getInfo: async (req, res, next) => {
-    try {
-      const result = await authService.getInfo(req);
-      const response = responseSuccess(
-        result,
-        "Lấy thông tin tài khoản thành công"
-      );
-      res.status(response.statusCode).json(response);
-    } catch (error) {
-      next(error);
-    }
-  },
+  
 };
 
 export default authController;

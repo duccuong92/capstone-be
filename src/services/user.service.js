@@ -1,6 +1,5 @@
 import prisma from "../common/prisma/init.prisma";
 
-
 export const userService = {
   findAll: async (req) => {
     let { page, pageSize, search } = req.query;
@@ -31,6 +30,45 @@ export const userService = {
       totalItem: totalItem,
       totalPage: totalPage,
       items: users || [],
+    };
+  },
+
+  getInfo: async (req) => {
+    delete req.user.password;
+    return req.user;
+  },
+
+  updateInfo: async (req) => {
+    const userId = req.user?.id;
+    const data = req.body;
+
+    const updateData = {};
+
+    if (data.fullName) updateData.fullName = data.fullName;
+    if (data.email) updateData.email = data.email;
+    if (data.age !== undefined) updateData.age = data.age;
+    if (data.avatar) updateData.avatar = data.avatar;
+    updateData.updatedAt = new Date();
+
+    const updatedUser = await prisma.users.update({
+      where: {
+        id: userId,
+        isDeleted: false,
+      },
+      data: updateData,
+      select: {
+        id: true,
+        fullName: true,
+        email: true,
+        age: true,
+        avatar: true,
+        createdAt: true,
+        updatedAt: true,
+      },
+    });
+
+    return {
+      items: updatedUser,
     };
   },
 };

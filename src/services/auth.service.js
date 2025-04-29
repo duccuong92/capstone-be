@@ -86,10 +86,7 @@ const authService = {
     return tokens;
   },
 
-  getInfo: async (req) => {
-    delete req.user.password;
-    return req.user;
-  },
+
 };
 
 export default authService;
