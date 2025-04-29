@@ -1,11 +1,12 @@
 import express from "express";
 import { PORT } from "./src/common/constant/app.constant";
-import { handleError } from "./src/common/helper/error.helper";
+
 import cors from "cors";
 import rootRouter from "./src/routes/root.route";
 import logApi from "./src/common/logging/log-api.morgan";
 import logger from "./src/common/logging/logger.winston";
 import helmet from "helmet";
+import { handleError } from "./src/common/helpers/error.helper";
 
 const app = express();
 
