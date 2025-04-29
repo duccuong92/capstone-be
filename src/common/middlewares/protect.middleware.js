@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken";
 import { UnAuthorizedException } from "../helpers/exception.helper";
 import prisma from "../prisma/init.prisma";
+import { ACCESS_TOKEN_SECRET } from "../constant/app.constant";
 
 const protect = async (req, res, next) => {
   try {
@@ -15,7 +16,7 @@ const protect = async (req, res, next) => {
 
     const user = await prisma.users.findUnique({
       where: {
-        id: decode.userId,
+        id: decode.sub,
       },
     });
 
