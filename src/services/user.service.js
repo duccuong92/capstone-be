@@ -12,16 +12,19 @@ export const userService = {
     const skip = (page - 1) * pageSize;
 
     const where = { fullName: { contains: search } };
-    const users = await prisma.users.findMany({
-      skip: skip,
-      take: pageSize,
-      orderBy: { createdAt: "desc" },
-      where: where,
-    });
 
-    const totalItem = await prisma.users.count({
-      where: where,
-    });
+    const [users, totalItem] = await Promise.all([
+      prisma.users.findMany({
+        skip: skip,
+        take: pageSize,
+        orderBy: { createdAt: "desc" },
+        where: where,
+      }),
+      prisma.users.count({
+        where: where,
+      }),
+    ]);
+
     const totalPage = Math.ceil(totalItem / pageSize);
 
     return {
