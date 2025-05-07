@@ -1,7 +1,7 @@
 import { BadRequestException, NotFoundException } from "../common/helpers/exception.helper"
 import prisma from "../common/prisma/init.prisma"
 
-export const imageService = {
+export const imagesService = {
   // 5. GET thông tin ảnh và người tạo ảnh bằng id ảnh
   getImageById: async (req) => {
     const { id } = req.params

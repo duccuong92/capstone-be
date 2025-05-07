@@ -7,4 +7,4 @@ imageRouter.get("/", imageController.findAll)
 
 imageRouter.get("/search-by-name", imageController.searchImageByName)
 
-export default imageRouter
+export default imageRouter;
