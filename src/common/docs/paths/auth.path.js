@@ -1,4 +1,4 @@
-const authPaths = {
+const authPath = {
   "/auth/register": {
     post: {
       tags: ["Auth"],
@@ -242,4 +242,4 @@ const authPaths = {
   },
 };
 
-export default authPaths;
+export default authPath;

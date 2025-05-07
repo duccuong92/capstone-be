@@ -1,4 +1,5 @@
-import authPaths from "./paths/auth.path";
+import authPath from "./paths/auth.path";
+import imagePath from "./paths/image.path";
 
 const swaggerDocument = {
   openapi: "3.1.1",
@@ -10,7 +11,6 @@ const swaggerDocument = {
     {
       url: "http://localhost:3069/api",
       description: "Local Server",
-
     },
   ],
   components: {
@@ -23,9 +23,9 @@ const swaggerDocument = {
     },
   },
   paths: {
-    ...authPaths
-  }
-
+    ...authPath,
+    ...imagePath,
+  },
 };
 
 export default swaggerDocument;

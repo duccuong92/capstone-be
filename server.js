@@ -5,7 +5,6 @@ import cors from "cors";
 import rootRouter from "./src/routes/root.route";
 import logApi from "./src/common/logging/log-api.morgan";
 import logger from "./src/common/logging/logger.winston";
-import helmet from "helmet";
 import { handleError } from "./src/common/helpers/error.helper";
 
 const app = express();
@@ -17,7 +16,6 @@ app.use(
     origin: ["http://localhost:3000"],
   })
 );
-app.use(helmet());
 
 app.use(rootRouter);
 app.use(handleError);
