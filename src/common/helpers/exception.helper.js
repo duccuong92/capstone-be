@@ -20,3 +20,11 @@ export class ForbiddenException extends Error {
       this.statusCode = statusCodes.FORBIDDEN;
    }
 }
+
+export class NotFoundException extends Error {
+   constructor(message = `NotFoundException`) {
+     super(message)
+     this.statusCode = statusCodes.NOT_FOUND
+   }
+ }
+ 
