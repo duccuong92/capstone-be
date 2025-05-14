@@ -1,10 +1,10 @@
-export const responseSuccess = (data = null, message = `Thành công`, statusCode = 200) => {
+export const responseSuccess = (data = null, message = `Thành công`, statusCode = 200, doc = ``) => {
     return {
        status: `success`,
        statusCode: statusCode,
        message: message,
        data: data,
-       doc: "domain.com/doc-api",
+       doc: `http://localhost:3069/api-docs/${doc}`,
     };
  };
  
@@ -14,7 +14,7 @@ export const responseSuccess = (data = null, message = `Thành công`, statusCod
        statusCode: statusCode,
        message: message,
        stack: stack,
-       doc: "domain.com/doc-api",
+       doc: "http://localhost:3069/api-docs/",
     };
  };
  

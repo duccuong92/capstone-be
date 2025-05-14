@@ -25,6 +25,11 @@ export const userService = {
       }),
     ]);
 
+    const sanitizedUsers = users.map((user) => {
+      const { password, ...userWithoutPassword } = user; 
+      return userWithoutPassword;
+    });
+
     const totalPage = Math.ceil(totalItem / pageSize);
 
     return {
@@ -32,7 +37,7 @@ export const userService = {
       pageSize: pageSize,
       totalItem: totalItem,
       totalPage: totalPage,
-      items: users || [],
+      items: sanitizedUsers || [],
     };
   },
 
